@@ -3,27 +3,12 @@ package presenters
 import (
 	"bytes"
 	"fmt"
+	"goics/templates"
 	"html/template"
 	"iblclient"
 	"os"
+	"strings"
 )
-
-const episodeTpl = `
-<a href="/programmes/{{.Id}}" title="{{.Title}}" class="list-item-link stat" >
-    {{if .Number}}
-        <div class="number" aria-hidden="true">{{.Number}}</div>
-    {{end}}
-    <div class="title top-title">{{.Title}}</div>
-    <div class="primary">
-        <img src=""/>
-        <div class="overlay"></div>
-        <div class="play-icon">SOMEOTHERTPL</div>
-    </div>
-    <div class="secondary">
-        <div class="title">{{.Title}}</div>
-    </div>
-</a>
-`
 
 func checkError(err error) {
 	if err != nil {
@@ -32,14 +17,23 @@ func checkError(err error) {
 	}
 }
 
-func PresentEpisode(episode iblclient.Programme) string {
+type templateData struct {
+	Number int
+	Image  string
+	iblclient.Item
+}
 
-	t := template.New("Episode template")
-	t, err := t.Parse(episodeTpl)
+func PresentEpisode(item iblclient.Item) string {
+
+	episodeTemplate, err := template.New("episode").Parse(string(templates.MustAsset("episode.html")))
 	checkError(err)
 
 	var doc bytes.Buffer
-	err = t.Execute(&doc, episode)
+	err = episodeTemplate.Execute(&doc, templateData{
+		Number: 0,
+		Image:  strings.Replace(item.Image.Standard, "{recipe}", "336x189", 1),
+		Item:   item,
+	})
 	checkError(err)
 
 	return doc.String()

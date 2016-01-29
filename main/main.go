@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"goics/routes"
-	"log"
+	_ "log"
 	"net/http"
 )
 
@@ -29,8 +29,7 @@ func main() {
 	router.GET("/list/status", routes.Status)
 	router.GET("/list/channel/:channel/a-z", routes.ChannelAtoz)
 
-	//req, _ := http.NewRequest("GET", "/list/channel/bbc_one_london/a-z", nil)
-	//router.ServeHTTP(new(mockResponseWriter), req)
-
-	log.Fatal(http.ListenAndServe(":7080", router))
+	req, _ := http.NewRequest("GET", "/list/channel/bbc_one_london/a-z", nil)
+	router.ServeHTTP(new(mockResponseWriter), req)
+	//log.Fatal(http.ListenAndServe(":7080", router))
 }
