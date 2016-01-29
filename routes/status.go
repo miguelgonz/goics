@@ -3,7 +3,6 @@ package routes
 import (
 	"encoding/json"
 	"github.com/julienschmidt/httprouter"
-	"goics"
 	"net/http"
 )
 
@@ -14,8 +13,8 @@ type StatusResponse struct {
 
 func Status(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	output, _ := json.Marshal(StatusResponse{
-		Version: goics.VERSION,
-		Name:    goics.NAME,
+		Version: "0.1",
+		Name:    "list_service",
 	})
 	w.Write(output)
 }

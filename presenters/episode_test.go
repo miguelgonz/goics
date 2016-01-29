@@ -9,26 +9,26 @@ import (
 )
 
 func TestEpisodeHasMarkup(t *testing.T) {
-	crawler := getCrawler(getTestItem(), t)
-	assertNodeCount(2, ".title", crawler, t)
-	assertNodeCount(1, ".primary .overlay", crawler, t)
-	assertNodeCount(1, ".primary .play-icon", crawler, t)
-	assertNodeCount(1, ".secondary .synopsis", crawler, t)
-	assertNodeCount(1, ".secondary .master-brand", crawler, t)
+	c := getCrawler(getTestItem(), t)
+	assertNodeCount(2, ".title", c, t)
+	assertNodeCount(1, ".primary .overlay", c, t)
+	assertNodeCount(1, ".primary .play-icon", c, t)
+	assertNodeCount(1, ".secondary .synopsis", c, t)
+	assertNodeCount(1, ".secondary .master-brand", c, t)
 
-	assertNodeText("The programme title", ".title.top-title", crawler, t)
-	assertNodeText("The programme subtitle", ".subtitle", crawler, t)
+	assertNodeText("The programme title", ".title.top-title", c, t)
+	assertNodeText("The programme subtitle", ".subtitle", c, t)
 }
 
-func assertNodeCount(expected int, selector string, crawler *goquery.Document, t *testing.T) {
-	foundCount := crawler.Find(selector).Length()
+func assertNodeCount(expected int, selector string, c *goquery.Document, t *testing.T) {
+	foundCount := c.Find(selector).Length()
 	if foundCount != expected {
 		t.Error(fmt.Sprintf("The selector %s was found %d times, expecting %d.", selector, foundCount, expected))
 	}
 }
 
-func assertNodeText(expected string, selector string, crawler *goquery.Document, t *testing.T) {
-	foundText := crawler.Find(selector).Text()
+func assertNodeText(expected string, selector string, c *goquery.Document, t *testing.T) {
+	foundText := c.Find(selector).Text()
 	if foundText != expected {
 		t.Error("The selector " + selector + " contains " + foundText + ", expecting " + expected)
 	}
