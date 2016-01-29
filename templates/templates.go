@@ -83,7 +83,7 @@ func episodeHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "episode.html", size: 1172, mode: os.FileMode(420), modTime: time.Unix(1454080408, 0)}
+	info := bindataFileInfo{name: "episode.html", size: 1172, mode: os.FileMode(420), modTime: time.Unix(1454091329, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

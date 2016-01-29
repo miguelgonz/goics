@@ -1,23 +1,35 @@
 package main
 
 import (
-	_ "fmt"
+	"fmt"
 	"goics"
+	"iblclient"
 	"log"
 	"net/http"
-	_ "net/http/httptest"
+	"net/http/httptest"
 )
 
+func start() {
+	log.Fatal(http.ListenAndServe(":7080", goics.NewRouter()))
+}
+
+func testResponse() {
+	req, _ := http.NewRequest("GET", "/list/channel/bbc_one_london/a-z", nil)
+	w := httptest.NewRecorder()
+
+	goics.NewRouter().ServeHTTP(w, req)
+
+	fmt.Println(w.Code)
+	fmt.Println(w.Body.String())
+}
+
+func testIblFetchers() {
+	fmt.Printf("%+v", iblclient.FetchChannels())
+	fmt.Printf("%+v", iblclient.FetchSearch("eastenders"))
+}
+
 func main() {
-	router := goics.NewRouter()
-	log.Fatal(http.ListenAndServe(":7080", router))
-
-	/*
-		req, _ := http.NewRequest("GET", "/list/channel/bbc_one_london/a-z", nil)
-		w := httptest.NewRecorder()
-		router.ServeHTTP(w, req)
-		fmt.Println(w.Code)
-		fmt.Println(w.Body.String())
-	*/
-
+	start()
+	//testIblFetchers();
+	//testResponse();
 }

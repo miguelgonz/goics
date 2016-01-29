@@ -1,6 +1,6 @@
 <a href="/programmes/{{.ID}}" title="{{.Title}}" class="list-item-link stat">
     {{if .Number}}
-        <div class="number" aria-hidden="true">{{.Number}}</div>
+        <div class="number">{{.Number}}</div>
     {{end}}
     <div class="title top-title">{{.Title}}</div>
 
@@ -9,10 +9,10 @@
             <img class="img" src="{{.Image}}" alt="{{.Title}}" />
         </div>
         <div class="overlay"></div>
-        {{if .Labels}}
-            <div class="signpost editorial">{{.Labels.Editorial}}</div>
+        {{if .Labels.Editorial}}
+        <div class="signpost editorial">{{.Labels.Editorial}}</div>
         {{end}}
-        <div class="play-icon"><i aria-hidden="true" class="icon tviplayericon tviplayericon-iplayer"></i></div>
+        <div class="play-icon"><i class="icon tviplayericon tviplayericon-iplayer"></i></div>
     </div>
 
     <div class="secondary">

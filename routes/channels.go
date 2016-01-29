@@ -10,13 +10,14 @@ import (
 
 func ChannelAtoz(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	channelProgrammes := iblclient.FetchChannelProgrammes(params.ByName("channel"))
+	var presentedItem string
 
-	if len(channelProgrammes.Elements) > 0 {
-		firstEpisode := channelProgrammes.Elements[0]
-		presentedFirstEpisode := presenters.PresentEpisode(firstEpisode)
-		w.Write([]byte(fmt.Sprintf("%s", presentedFirstEpisode)))
-	} else {
+	if len(channelProgrammes.Elements) == 0 {
 		w.Write([]byte(fmt.Sprintf("No Episodes: %+v", channelProgrammes)))
 	}
 
+	for _, item := range channelProgrammes.Elements {
+		presentedItem = presenters.PresentEpisode(item)
+		w.Write([]byte(fmt.Sprintf("%s", presentedItem)))
+	}
 }
