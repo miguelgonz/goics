@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+//go:generate go-bindata -o templates/templates.go -ignore \"\.go$\" -prefix templates/ -pkg templates templates/...
+
 func NewRouter() http.Handler {
 	router := httprouter.New()
 	router.GET("/status", routes.Status)
